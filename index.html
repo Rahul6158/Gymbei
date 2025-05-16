@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack - Personalized Fitness & Nutrition</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">FitTrack</div>
+        <ul class="nav-links">
+            <li><a href="#" class="nav-link" data-section="home">Home</a></li>
+            <li><a href="#" class="nav-link" data-section="personalized-plan">My Plan</a></li>
+            <li><a href="#" class="nav-link" data-section="body-muscles">Muscles</a></li>
+            <li><a href="#" class="nav-link" data-section="exercises">Exercises</a></li>
+            <li><a href="#" class="nav-link" data-section="nutrition">Nutrition</a></li>
+            <li><a href="#" class="nav-link" data-section="workout-planner">Workout Planner</a></li>
+            <li><a href="#" class="nav-link" data-section="food-tracker">Food Tracker</a></li>
+        </ul>
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+
+    <!-- Main Content Sections -->
+    <main>
+        <!-- Home/Input Section -->
+        <section id="home" class="section active">
+            <div class="container">
+                <h1>Welcome to FitTrack</h1>
+                <p class="subtitle">Your personalized fitness and nutrition companion</p>
+                
+                <div class="input-form">
+                    <h2>Create Your Profile</h2>
+                    <form id="user-input-form">
+                        <div class="form-group">
+                            <label for="dob">Date of Birth:</label>
+                            <input type="date" id="dob" name="dob" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="height">Height (cm):</label>
+                            <input type="number" id="height" name="height" min="100" max="250" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="weight">Weight (kg):</label>
+                            <input type="number" id="weight" name="weight" min="30" max="200" step="0.1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Body Type:</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="body-type" value="ectomorph" required> Ectomorph</label>
+                                <label><input type="radio" name="body-type" value="mesomorph"> Mesomorph</label>
+                                <label><input type="radio" name="body-type" value="endomorph"> Endomorph</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="goal">Primary Goal:</label>
+                            <select id="goal" name="goal" required>
+                                <option value="">Select your goal</option>
+                                <option value="weight-loss">Weight Loss</option>
+                                <option value="muscle-gain">Muscle Gain</option>
+                                <option value="maintenance">Maintenance</option>
+                                <option value="fitness">Improved Fitness</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="activity-level">Activity Level:</label>
+                            <select id="activity-level" name="activity-level" required>
+                                <option value="">Select your activity level</option>
+                                <option value="sedentary">Sedentary (little or no exercise)</option>
+                                <option value="lightly-active">Lightly Active (light exercise 1-3 days/week)</option>
+                                <option value="moderately-active">Moderately Active (moderate exercise 3-5 days/week)</option>
+                                <option value="very-active">Very Active (hard exercise 6-7 days/week)</option>
+                                <option value="extremely-active">Extremely Active (very hard exercise & physical job)</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn">Generate My Plan</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personalized Plan Section -->
+        <section id="personalized-plan" class="section">
+            <div class="container">
+                <h1>Your Personalized Plan</h1>
+                <div class="user-stats">
+                    <div class="stat-card">
+                        <h3>Age</h3>
+                        <p id="user-age">--</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Height</h3>
+                        <p id="user-height">-- cm</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Weight</h3>
+                        <p id="user-weight">-- kg</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Body Type</h3>
+                        <p id="user-body-type">--</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Goal</h3>
+                        <p id="user-goal">--</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Activity Level</h3>
+                        <p id="user-activity">--</p>
+                    </div>
+                </div>
+                
+                <div class="plan-sections">
+                    <div class="plan-card">
+                        <h2>Workout Plan</h2>
+                        <div id="workout-recommendation">
+                            <p>Based on your inputs, we recommend:</p>
+                            <ul id="workout-plan-list"></ul>
+                        </div>
+                        <a href="#workout-planner" class="btn" data-section="workout-planner">View Workout Planner</a>
+                    </div>
+                    
+                    <div class="plan-card">
+                        <h2>Nutrition Plan</h2>
+                        <div id="nutrition-recommendation">
+                            <p>Your daily calorie needs: <span id="daily-calories">--</span> kcal</p>
+                            <p>Recommended macronutrient split:</p>
+                            <ul id="macro-split"></ul>
+                        </div>
+                        <a href="#" class="btn" data-section="nutrition">View Nutrition Details</a>
+                    </div>
+                    
+                    <div class="plan-card">
+                        <h2>General Advice</h2>
+                        <div id="general-advice">
+                            <p id="advice-text"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Body & Muscles Section -->
+        <section id="body-muscles" class="section">
+            <div class="container">
+                <h1>Muscle Groups</h1>
+                <p class="subtitle">Learn about the major muscle groups and their functions</p>
+                
+                <div class="muscle-gallery">
+                    <div class="muscle-card" data-muscle="chest">
+                        <div class="muscle-image">
+                            <!-- <img src="https://via.placeholder.com/300x200?text=Chest+Muscles" alt="Chest Muscles"> -->
+                        </div>
+                        <h3>Chest</h3>
+                        <div class="muscle-info">
+                            <p>The chest muscles (pectorals) are responsible for movements like pushing and bringing your arms across your body.</p>
+                            <a href="#" class="btn" data-section="exercises" data-filter="chest">View Chest Exercises</a>
+                        </div>
+                    </div>
+                    
+                    <div class="muscle-card" data-muscle="back">
+                        <div class="muscle-image">
+                            <!-- <img src="https://via.placeholder.com/300x200?text=Back+Muscles" alt="Back Muscles"> -->
+                        </div>
+                        <h3>Back</h3>
+                        <div class="muscle-info">
+                            <p>The back muscles (latissimus dorsi, trapezius, etc.) are responsible for pulling movements and maintaining posture.</p>
+                            <a href="#" class="btn" data-section="exercises" data-filter="back">View Back Exercises</a>
+                        </div>
+                    </div>
+                    
+                    <div class="muscle-card" data-muscle="shoulders">
+                        <div class="muscle-image">
+                            <!-- <img src="https://via.placeholder.com/300x200?text=Shoulder+Muscles" alt="Shoulder Muscles"> -->
+                        </div>
+                        <h3>Shoulders</h3>
+                        <div class="muscle-info">
+                            <p>The deltoids allow arm rotation and lifting. Strong shoulders are crucial for upper body strength.</p>
+                            <a href="#" class="btn" data-section="exercises" data-filter="shoulders">View Shoulder Exercises</a>
+                        </div>
+                    </div>
+                    
+                    <div class="muscle-card" data-muscle="arms">
+                        <div class="muscle-image">
+                            <!-- <img src="https://via.placeholder.com/300x200?text=Arm+Muscles" alt="Arm Muscles"> -->
+                        </div>
+                        <h3>Arms</h3>
+                        <div class="muscle-info">
+                            <p>Biceps (front) and triceps (back) work together to flex and extend the elbow joint.</p>
+                            <a href="#" class="btn" data-section="exercises" data-filter="arms">View Arm Exercises</a>
+                        </div>
+                    </div>
+                    
+                    <div class="muscle-card" data-muscle="legs">
+                        <div class="muscle-image">
+                            <!-- <img src="https://via.placeholder.com/300x200?text=Leg+Muscles" alt="Leg Muscles"> -->
+                        </div>
+                        <h3>Legs</h3>
+                        <div class="muscle-info">
+                            <p>Quadriceps (front), hamstrings (back), and calves work together for walking, running, and jumping.</p>
+                            <a href="#" class="btn" data-section="exercises" data-filter="legs">View Leg Exercises</a>
+                        </div>
+                    </div>
+                    
+                    <div class="muscle-card" data-muscle="core">
+                        <div class="muscle-image">
+                            <!-- <img src="https://via.placeholder.com/300x200?text=Core+Muscles" alt="Core Muscles"> -->
+                        </div>
+                        <h3>Core</h3>
+                        <div class="muscle-info">
+                            <p>Abdominals and obliques stabilize the spine and support posture and movement.</p>
+                            <a href="#" class="btn" data-section="exercises" data-filter="core">View Core Exercises</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercises Section -->
+        <section id="exercises" class="section">
+            <div class="container">
+                <h1>Exercises</h1>
+                <div class="exercise-controls">
+                    <div class="search-box">
+                        <input type="text" id="exercise-search" placeholder="Search exercises...">
+                        <button id="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <select id="muscle-filter">
+                        <option value="all">All Muscle Groups</option>
+                        <option value="chest">Chest</option>
+                        <option value="back">Back</option>
+                        <option value="shoulders">Shoulders</option>
+                        <option value="arms">Arms</option>
+                        <option value="legs">Legs</option>
+                        <option value="core">Core</option>
+                        <option value="cardio">Cardio</option>
+                    </select>
+                </div>
+                
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="all-exercises">All Exercises</button>
+                    <button class="tab-btn" data-tab="warmups">Warm-up Exercises</button>
+                </div>
+                
+                <div class="tab-content active" id="all-exercises">
+                    <div class="exercise-grid" id="exercise-container">
+                        <!-- Exercises will be loaded here via JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="warmups">
+                    <div class="warmup-exercises">
+                        <div class="warmup-card">
+                            <h3>Dynamic Stretching</h3>
+                            <p>Arm circles, leg swings, and torso twists to increase range of motion.</p>
+                            <img src="https://via.placeholder.com/300x200?text=Dynamic+Stretching" alt="Dynamic Stretching">
+                        </div>
+                        <div class="warmup-card">
+                            <h3>Light Cardio</h3>
+                            <p>5-10 minutes of jogging, jumping jacks, or cycling to elevate heart rate.</p>
+                            <img src="https://via.placeholder.com/300x200?text=Light+Cardio" alt="Light Cardio">
+                        </div>
+                        <div class="warmup-card">
+                            <h3>Bodyweight Movements</h3>
+                            <p>Bodyweight squats, lunges, and push-ups to activate muscles.</p>
+                            <img src="https://via.placeholder.com/300x200?text=Bodyweight+Movements" alt="Bodyweight Movements">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nutrition Section -->
+        <section id="nutrition" class="section">
+            <div class="container">
+                <h1>Nutrition Guidance</h1>
+                
+                <div class="nutrition-plan">
+                    <h2>Your Personalized Nutrition</h2>
+                    <div class="nutrition-stats">
+                        <div class="nutri-card">
+                            <h3>Daily Calories</h3>
+                            <p id="display-calories">-- kcal</p>
+                        </div>
+                        <div class="nutri-card">
+                            <h3>Protein</h3>
+                            <p id="display-protein">-- g</p>
+                        </div>
+                        <div class="nutri-card">
+                            <h3>Carbs</h3>
+                            <p id="display-carbs">-- g</p>
+                        </div>
+                        <div class="nutri-card">
+                            <h3>Fats</h3>
+                            <p id="display-fats">-- g</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nutrition-content">
+<!-- Add this section to your HTML file (nutrition section) -->
+<div class="nutri-section">
+    <h2>Comprehensive Food Groups</h2>
+    
+    <!-- Carbohydrates -->
+    <div class="food-group">
+        <h3>1. Carbohydrates (Energy, Calcium, B Vitamins)</h3>
+        <div class="food-table-container">
+            <table class="food-table">
+                <thead>
+                    <tr>
+                        <th>Food</th>
+                        <th>Calories (kcal)</th>
+                        <th>Protein (g)</th>
+                        <th>Carbs (g)</th>
+                        <th>Fats (g)</th>
+                        <th>Fiber (g)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>White Rice (1 cup cooked)</td><td>205</td><td>4.2</td><td>44.5</td><td>0.4</td><td>0.6</td></tr>
+                    <tr><td>Brown Rice (1 cup cooked)</td><td>216</td><td>5.0</td><td>44.8</td><td>1.8</td><td>3.5</td></tr>
+                    <tr><td>Quinoa (1 cup cooked)</td><td>222</td><td>8.1</td><td>39.4</td><td>3.6</td><td>5.2</td></tr>
+                    <tr><td>Whole Wheat Bread (1 slice)</td><td>69</td><td>3.6</td><td>12.3</td><td>1.1</td><td>1.9</td></tr>
+                    <tr><td>Oats (1/2 cup dry)</td><td>150</td><td>5.0</td><td>27.0</td><td>2.5</td><td>4.0</td></tr>
+                    <tr><td>Sweet Potato (1 medium)</td><td>103</td><td>2.3</td><td>23.6</td><td>0.2</td><td>3.8</td></tr>
+                    <tr><td>White Potato (1 medium)</td><td>164</td><td>4.3</td><td>37.2</td><td>0.2</td><td>4.7</td></tr>
+                    <tr><td>Whole Wheat Pasta (1 cup cooked)</td><td>174</td><td>7.5</td><td>37.2</td><td>0.8</td><td>6.3</td></tr>
+                    <tr><td>Corn (1 cup)</td><td>143</td><td>5.1</td><td>31.3</td><td>2.1</td><td>3.6</td></tr>
+                    <tr><td>Buckwheat (1 cup cooked)</td><td>155</td><td>5.7</td><td>33.5</td><td>1.0</td><td>4.5</td></tr>
+                    <tr><td>Millet (1 cup cooked)</td><td>207</td><td>6.1</td><td>41.2</td><td>1.7</td><td>2.3</td></tr>
+                    <tr><td>Barley (1 cup cooked)</td><td>193</td><td>3.5</td><td>44.3</td><td>0.7</td><td>6.0</td></tr>
+                    <tr><td>Couscous (1 cup cooked)</td><td>176</td><td>5.9</td><td>36.5</td><td>0.3</td><td>2.2</td></tr>
+                    <tr><td>Bulgur (1 cup cooked)</td><td>151</td><td>5.6</td><td>33.8</td><td>0.4</td><td>8.2</td></tr>
+                    <tr><td>Rye Bread (1 slice)</td><td>83</td><td>2.7</td><td>15.5</td><td>1.1</td><td>1.9</td></tr>
+                    <tr><td>Plantain (1 medium)</td><td>218</td><td>2.0</td><td>57.0</td><td>0.2</td><td>4.1</td></tr>
+                    <tr><td>Tapioca (1 cup cooked)</td><td>135</td><td>0.2</td><td>34.0</td><td>0.0</td><td>0.2</td></tr>
+                    <tr><td>Farro (1 cup cooked)</td><td>220</td><td>8.0</td><td>47.0</td><td>1.0</td><td>5.0</td></tr>
+                    <tr><td>Spelt (1 cup cooked)</td><td>246</td><td>10.7</td><td>51.3</td><td>1.6</td><td>7.6</td></tr>
+                    <tr><td>Amaranth (1 cup cooked)</td><td>251</td><td>9.3</td><td>46.0</td><td>3.9</td><td>5.2</td></tr>
+                    <tr><td>Teff (1 cup cooked)</td><td>255</td><td>9.8</td><td>50.0</td><td>1.6</td><td>7.0</td></tr>
+                    <tr><td>Wild Rice (1 cup cooked)</td><td>166</td><td>6.5</td><td>35.0</td><td>0.6</td><td>3.0</td></tr>
+                    <tr><td>Sorghum (1 cup cooked)</td><td>329</td><td>10.4</td><td>72.0</td><td>3.1</td><td>6.7</td></tr>
+                    <tr><td>Whole Wheat Tortilla (1 medium)</td><td>130</td><td>4.0</td><td>22.0</td><td>3.0</td><td>3.0</td></tr>
+                    <tr><td>Pita Bread (1 medium)</td><td>165</td><td>5.5</td><td>33.0</td><td>0.8</td><td>1.3</td></tr>
+                    <tr><td>Bagel (1 medium)</td><td>245</td><td>9.0</td><td>48.0</td><td>1.5</td><td>2.0</td></tr>
+                    <tr><td>English Muffin (1 whole)</td><td>134</td><td>4.4</td><td>26.0</td><td>1.0</td><td>1.3</td></tr>
+                    <tr><td>Pumpkin (1 cup cooked)</td><td>49</td><td>2.0</td><td>12.0</td><td>0.2</td><td>2.7</td></tr>
+                    <tr><td>Butternut Squash (1 cup cooked)</td><td>82</td><td>1.8</td><td>21.5</td><td>0.2</td><td>6.6</td></tr>
+                    <tr><td>Beets (1 cup cooked)</td><td>75</td><td>2.9</td><td>16.9</td><td>0.2</td><td>3.4</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Protein -->
+    <div class="food-group">
+        <h3>2. Protein (Muscle Building, Tissue Repair)</h3>
+        <div class="food-table-container">
+            <table class="food-table">
+                <thead>
+                    <tr>
+                        <th>Food</th>
+                        <th>Calories (kcal)</th>
+                        <th>Protein (g)</th>
+                        <th>Carbs (g)</th>
+                        <th>Fats (g)</th>
+                        <th>Fiber (g)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Chicken Breast (100g)</td><td>165</td><td>31.0</td><td>0.0</td><td>3.6</td><td>0.0</td></tr>
+                    <tr><td>Turkey Breast (100g)</td><td>135</td><td>29.6</td><td>0.1</td><td>1.7</td><td>0.0</td></tr>
+                    <tr><td>Salmon (100g)</td><td>208</td><td>20.4</td><td>0.0</td><td>13.4</td><td>0.0</td></tr>
+                    <tr><td>Tuna (100g canned in water)</td><td>128</td><td>29.1</td><td>0.0</td><td>0.8</td><td>0.0</td></tr>
+                    <tr><td>Eggs (1 large)</td><td>78</td><td>6.3</td><td>0.6</td><td>5.3</td><td>0.0</td></tr>
+                    <tr><td>Egg Whites (1 large)</td><td>17</td><td>3.6</td><td>0.2</td><td>0.1</td><td>0.0</td></tr>
+                    <tr><td>Lean Beef (100g)</td><td>250</td><td>26.0</td><td>0.0</td><td>15.0</td><td>0.0</td></tr>
+                    <tr><td>Pork Tenderloin (100g)</td><td>143</td><td>26.2</td><td>0.0</td><td>3.5</td><td>0.0</td></tr>
+                    <tr><td>Shrimp (100g)</td><td>99</td><td>24.0</td><td>0.2</td><td>0.3</td><td>0.0</td></tr>
+                    <tr><td>Greek Yogurt (100g non-fat)</td><td>59</td><td>10.0</td><td>3.6</td><td>0.4</td><td>0.0</td></tr>
+                    <tr><td>Cottage Cheese (100g low-fat)</td><td>98</td><td>11.1</td><td>3.4</td><td>4.3</td><td>0.0</td></tr>
+                    <tr><td>Tofu (100g firm)</td><td>144</td><td>15.8</td><td>3.9</td><td>8.7</td><td>2.3</td></tr>
+                    <tr><td>Tempeh (100g)</td><td>193</td><td>19.0</td><td>9.0</td><td>11.0</td><td>8.0</td></tr>
+                    <tr><td>Edamame (100g cooked)</td><td>122</td><td>11.9</td><td>9.9</td><td>5.2</td><td>5.2</td></tr>
+                    <tr><td>Lentils (100g cooked)</td><td>116</td><td>9.0</td><td>20.0</td><td>0.4</td><td>8.0</td></tr>
+                    <tr><td>Chickpeas (100g cooked)</td><td>164</td><td>8.9</td><td>27.4</td><td>2.6</td><td>7.6</td></tr>
+                    <tr><td>Black Beans (100g cooked)</td><td>132</td><td>8.9</td><td>23.7</td><td>0.5</td><td>8.7</td></tr>
+                    <tr><td>Kidney Beans (100g cooked)</td><td>127</td><td>8.7</td><td>22.8</td><td>0.5</td><td>6.4</td></tr>
+                    <tr><td>Peanuts (100g)</td><td>567</td><td>25.8</td><td>16.1</td><td>49.2</td><td>8.5</td></tr>
+                    <tr><td>Almonds (100g)</td><td>579</td><td>21.2</td><td>21.6</td><td>49.9</td><td>12.5</td></tr>
+                    <tr><td>Walnuts (100g)</td><td>654</td><td>15.2</td><td>13.7</td><td>65.2</td><td>6.7</td></tr>
+                    <tr><td>Pumpkin Seeds (100g)</td><td>559</td><td>30.2</td><td>10.7</td><td>49.0</td><td>6.0</td></tr>
+                    <tr><td>Sunflower Seeds (100g)</td><td>584</td><td>20.8</td><td>20.0</td><td>51.5</td><td>8.6</td></tr>
+                    <tr><td>Chia Seeds (100g)</td><td>486</td><td>16.5</td><td>42.1</td><td>30.7</td><td>34.4</td></tr>
+                    <tr><td>Flaxseeds (100g)</td><td>534</td><td>18.3</td><td>28.9</td><td>42.2</td><td>27.3</td></tr>
+                    <tr><td>Hemp Seeds (100g)</td><td>553</td><td>31.6</td><td>8.7</td><td>48.8</td><td>4.0</td></tr>
+                    <tr><td>Quinoa (100g cooked)</td><td>120</td><td>4.4</td><td>21.3</td><td>1.9</td><td>2.8</td></tr>
+                    <tr><td>Whey Protein (1 scoop)</td><td>120</td><td>24.0</td><td>3.0</td><td>1.0</td><td>0.0</td></tr>
+                    <tr><td>Casein Protein (1 scoop)</td><td>120</td><td>24.0</td><td>3.0</td><td>1.0</td><td>0.0</td></tr>
+                    <tr><td>Pea Protein (1 scoop)</td><td>120</td><td>24.0</td><td>2.0</td><td>1.5</td><td>1.0</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Dairy -->
+    <div class="food-group">
+        <h3>3. Dairy Products (Calcium, Vitamin D)</h3>
+        <div class="food-table-container">
+            <table class="food-table">
+                <thead>
+                    <tr>
+                        <th>Food</th>
+                        <th>Calories (kcal)</th>
+                        <th>Protein (g)</th>
+                        <th>Carbs (g)</th>
+                        <th>Fats (g)</th>
+                        <th>Fiber (g)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Whole Milk (1 cup)</td><td>149</td><td>7.7</td><td>11.7</td><td>8.0</td><td>0.0</td></tr>
+                    <tr><td>Skim Milk (1 cup)</td><td>83</td><td>8.3</td><td>12.2</td><td>0.2</td><td>0.0</td></tr>
+                    <tr><td>Greek Yogurt (100g plain)</td><td>59</td><td>10.0</td><td>3.6</td><td>0.4</td><td>0.0</td></tr>
+                    <tr><td>Regular Yogurt (100g plain)</td><td>61</td><td>3.5</td><td>4.7</td><td>3.3</td><td>0.0</td></tr>
+                    <tr><td>Cheddar Cheese (1 oz)</td><td>115</td><td>7.0</td><td>0.4</td><td>9.5</td><td>0.0</td></tr>
+                    <tr><td>Mozzarella Cheese (1 oz)</td><td>85</td><td>6.3</td><td>0.6</td><td>6.3</td><td>0.0</td></tr>
+                    <tr><td>Cottage Cheese (100g low-fat)</td><td>98</td><td>11.1</td><td>3.4</td><td>4.3</td><td>0.0</td></tr>
+                    <tr><td>Ricotta Cheese (100g part-skim)</td><td>138</td><td>11.4</td><td>5.1</td><td>7.9</td><td>0.0</td></tr>
+                    <tr><td>Feta Cheese (1 oz)</td><td>75</td><td>4.0</td><td>1.2</td><td>6.0</td><td>0.0</td></tr>
+                    <tr><td>Parmesan Cheese (1 oz)</td><td>111</td><td>10.0</td><td>1.0</td><td>7.0</td><td>0.0</td></tr>
+                    <tr><td>Butter (1 tbsp)</td><td>102</td><td>0.1</td><td>0.0</td><td>11.5</td><td>0.0</td></tr>
+                    <tr><td>Heavy Cream (1 tbsp)</td><td>52</td><td>0.4</td><td>0.4</td><td>5.5</td><td>0.0</td></tr>
+                    <tr><td>Sour Cream (1 tbsp)</td><td>23</td><td>0.4</td><td>0.5</td><td>2.3</td><td>0.0</td></tr>
+                    <tr><td>Ice Cream (1/2 cup vanilla)</td><td>137</td><td>2.3</td><td>16.0</td><td>7.3</td><td>0.5</td></tr>
+                    <tr><td>Frozen Yogurt (1/2 cup)</td><td>100</td><td>3.0</td><td>17.0</td><td>2.0</td><td>0.0</td></tr>
+                    <tr><td>Kefir (1 cup plain)</td><td>104</td><td>9.2</td><td>11.5</td><td>2.4</td><td>0.0</td></tr>
+                    <tr><td>Buttermilk (1 cup)</td><td>98</td><td>8.1</td><td>11.7</td><td>2.2</td><td>0.0</td></tr>
+                    <tr><td>Condensed Milk (1 tbsp)</td><td>62</td><td>1.5</td><td>10.5</td><td>1.7</td><td>0.0</td></tr>
+                    <tr><td>Evaporated Milk (1 cup)</td><td>338</td><td>16.9</td><td>25.2</td><td>19.1</td><td>0.0</td></tr>
+                    <tr><td>Goat Cheese (1 oz)</td><td>75</td><td>5.0</td><td>0.0</td><td>6.0</td><td>0.0</td></tr>
+                    <tr><td>Blue Cheese (1 oz)</td><td>100</td><td>6.0</td><td>0.7</td><td>8.0</td><td>0.0</td></tr>
+                    <tr><td>Swiss Cheese (1 oz)</td><td>111</td><td>7.6</td><td>0.4</td><td>8.8</td><td>0.0</td></tr>
+                    <tr><td>Provolone Cheese (1 oz)</td><td>100</td><td>7.0</td><td>0.6</td><td>7.5</td><td>0.0</td></tr>
+                    <tr><td>Gouda Cheese (1 oz)</td><td>101</td><td>7.1</td><td>0.6</td><td>7.8</td><td>0.0</td></tr>
+                    <tr><td>Brie Cheese (1 oz)</td><td>95</td><td>5.9</td><td>0.1</td><td>7.9</td><td>0.0</td></tr>
+                    <tr><td>Camembert Cheese (1 oz)</td><td>85</td><td>5.6</td><td>0.1</td><td>6.9</td><td>0.0</td></tr>
+                    <tr><td>Colby Cheese (1 oz)</td><td>110</td><td>6.7</td><td>0.7</td><td>9.0</td><td>0.0</td></tr>
+                    <tr><td>Monterey Jack Cheese (1 oz)</td><td>106</td><td>6.6</td><td>0.2</td><td>8.7</td><td>0.0</td></tr>
+                    <tr><td>Mascarpone Cheese (1 oz)</td><td>120</td><td>2.0</td><td>0.0</td><td>12.0</td><td>0.0</td></tr>
+                    <tr><td>Cream Cheese (1 oz)</td><td>99</td><td>1.8</td><td>1.6</td><td>9.8</td><td>0.0</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Fruits and Vegetables -->
+    <div class="food-group">
+        <h3>4. Fruits and Vegetables (Vitamins, Minerals, Fiber)</h3>
+        <div class="food-table-container">
+            <table class="food-table">
+                <thead>
+                    <tr>
+                        <th>Food</th>
+                        <th>Calories (kcal)</th>
+                        <th>Protein (g)</th>
+                        <th>Carbs (g)</th>
+                        <th>Fats (g)</th>
+                        <th>Fiber (g)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Apple (1 medium)</td><td>95</td><td>0.5</td><td>25.1</td><td>0.3</td><td>4.4</td></tr>
+                    <tr><td>Banana (1 medium)</td><td>105</td><td>1.3</td><td>27.0</td><td>0.4</td><td>3.1</td></tr>
+                    <tr><td>Orange (1 medium)</td><td>62</td><td>1.2</td><td>15.4</td><td>0.2</td><td>3.1</td></tr>
+                    <tr><td>Strawberries (1 cup)</td><td>49</td><td>1.0</td><td>11.7</td><td>0.5</td><td>3.0</td></tr>
+                    <tr><td>Blueberries (1 cup)</td><td>84</td><td>1.1</td><td>21.4</td><td>0.5</td><td>3.6</td></tr>
+                    <tr><td>Grapes (1 cup)</td><td>62</td><td>0.6</td><td>15.8</td><td>0.3</td><td>0.8</td></tr>
+                    <tr><td>Pineapple (1 cup chunks)</td><td>82</td><td>0.9</td><td>21.6</td><td>0.2</td><td>2.3</td></tr>
+                    <tr><td>Mango (1 cup pieces)</td><td>99</td><td>1.4</td><td>24.7</td><td>0.6</td><td>2.6</td></tr>
+                    <tr><td>Peach (1 medium)</td><td>59</td><td>1.4</td><td>14.3</td><td>0.4</td><td>2.3</td></tr>
+                    <tr><td>Pear (1 medium)</td><td>101</td><td>0.6</td><td>27.1</td><td>0.2</td><td>5.5</td></tr>
+                    <tr><td>Broccoli (1 cup chopped)</td><td>31</td><td>2.6</td><td>6.0</td><td>0.3</td><td>2.4</td></tr>
+                    <tr><td>Spinach (1 cup raw)</td><td>7</td><td>0.9</td><td>1.1</td><td>0.1</td><td>0.7</td></tr>
+                    <tr><td>Carrots (1 medium)</td><td>25</td><td>0.6</td><td>5.8</td><td>0.1</td><td>1.7</td></tr>
+                    <tr><td>Bell Pepper (1 medium)</td><td>31</td><td>1.0</td><td>7.2</td><td>0.3</td><td>2.5</td></tr>
+                    <tr><td>Tomato (1 medium)</td><td>22</td><td>1.1</td><td>4.8</td><td>0.2</td><td>1.5</td></tr>
+                    <tr><td>Cucumber (1 cup slices)</td><td>16</td><td>0.7</td><td>3.8</td><td>0.2</td><td>0.5</td></tr>
+                    <tr><td>Zucchini (1 cup sliced)</td><td>19</td><td>1.4</td><td>3.5</td><td>0.4</td><td>1.2</td></tr>
+                    <tr><td>Cauliflower (1 cup chopped)</td><td>27</td><td>2.1</td><td>5.3</td><td>0.3</td><td>2.1</td></tr>
+                    <tr><td>Brussels Sprouts (1 cup)</td><td>38</td><td>3.0</td><td>8.0</td><td>0.3</td><td>3.3</td></tr>
+                    <tr><td>Kale (1 cup chopped)</td><td>33</td><td>2.9</td><td>6.0</td><td>0.6</td><td>1.3</td></tr>
+                    <tr><td>Sweet Potato (1 medium)</td><td>103</td><td>2.3</td><td>23.6</td><td>0.2</td><td>3.8</td></tr>
+                    <tr><td>Avocado (1/2 medium)</td><td>120</td><td>1.5</td><td>6.0</td><td>11.0</td><td>5.0</td></tr>
+                    <tr><td>Eggplant (1 cup cubed)</td><td>20</td><td>0.8</td><td>4.8</td><td>0.1</td><td>2.5</td></tr>
+                    <tr><td>Green Beans (1 cup)</td><td>31</td><td>1.8</td><td>7.0</td><td>0.1</td><td>2.7</td></tr>
+                    <tr><td>Asparagus (1 cup)</td><td>27</td><td>2.9</td><td>5.2</td><td>0.2</td><td>2.8</td></tr>
+                    <tr><td>Mushrooms (1 cup sliced)</td><td>15</td><td>2.2</td><td>2.3</td><td>0.2</td><td>0.7</td></tr>
+                    <tr><td>Onion (1 medium)</td><td>44</td><td>1.2</td><td>10.3</td><td>0.1</td><td>1.9</td></tr>
+                    <tr><td>Garlic (1 clove)</td><td>4</td><td>0.2</td><td>1.0</td><td>0.0</td><td>0.1</td></tr>
+                    <tr><td>Watermelon (1 cup diced)</td><td>46</td><td>0.9</td><td>11.5</td><td>0.2</td><td>0.6</td></tr>
+                    <tr><td>Cantaloupe (1 cup diced)</td><td>54</td><td>1.3</td><td>13.0</td><td>0.3</td><td>1.4</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Fats and Sugars -->
+    <div class="food-group">
+        <h3>5. Fats and Sugars (Use Sparingly)</h3>
+        <div class="food-table-container">
+            <table class="food-table">
+                <thead>
+                    <tr>
+                        <th>Food</th>
+                        <th>Calories (kcal)</th>
+                        <th>Protein (g)</th>
+                        <th>Carbs (g)</th>
+                        <th>Fats (g)</th>
+                        <th>Fiber (g)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Olive Oil (1 tbsp)</td><td>119</td><td>0.0</td><td>0.0</td><td>13.5</td><td>0.0</td></tr>
+                    <tr><td>Coconut Oil (1 tbsp)</td><td>121</td><td>0.0</td><td>0.0</td><td>13.5</td><td>0.0</td></tr>
+                    <tr><td>Avocado Oil (1 tbsp)</td><td>124</td><td>0.0</td><td>0.0</td><td>14.0</td><td>0.0</td></tr>
+                    <tr><td>Butter (1 tbsp)</td><td>102</td><td>0.1</td><td>0.0</td><td>11.5</td><td>0.0</td></tr>
+                    <tr><td>Ghee (1 tbsp)</td><td>112</td><td>0.0</td><td>0.0</td><td>12.7</td><td>0.0</td></tr>
+                    <tr><td>Mayonnaise (1 tbsp)</td><td>94</td><td>0.1</td><td>0.1</td><td>10.3</td><td>0.0</td></tr>
+                    <tr><td>Peanut Butter (1 tbsp)</td><td>94</td><td>4.0</td><td>3.0</td><td>8.0</td><td>1.0</td></tr>
+                    <tr><td>Almond Butter (1 tbsp)</td><td>98</td><td>3.4</td><td>3.0</td><td>9.0</td><td>1.6</td></tr>
+                    <tr><td>Cashew Butter (1 tbsp)</td><td>94</td><td>2.8</td><td>4.4</td><td>7.9</td><td>0.3</td></tr>
+                    <tr><td>Sunflower Seed Butter (1 tbsp)</td><td>99</td><td>3.0</td><td>3.5</td><td>9.0</td><td>1.0</td></tr>
+                    <tr><td>Dark Chocolate (1 oz 70-85%)</td><td>170</td><td>2.2</td><td>13.0</td><td>12.1</td><td>3.1</td></tr>
+                    <tr><td>Milk Chocolate (1 oz)</td><td>152</td><td>2.2</td><td>16.4</td><td>8.8</td><td>1.0</td></tr>
+                    <tr><td>White Chocolate (1 oz)</td><td>153</td><td>1.7</td><td>16.6</td><td>9.3</td><td>0.2</td></tr>
+                    <tr><td>Chocolate Chips (1 tbsp)</td><td>70</td><td>0.9</td><td>8.5</td><td>4.0</td><td>0.7</td></tr>
+                    <tr><td>Honey (1 tbsp)</td><td>64</td><td>0.1</td><td>17.3</td><td>0.0</td><td>0.0</td></tr>
+                    <tr><td>Maple Syrup (1 tbsp)</td><td>52</td><td>0.0</td><td>13.4</td><td>0.0</td><td>0.0</td></tr>
+                    <tr><td>Agave Nectar (1 tbsp)</td><td>60</td><td>0.0</td><td>16.0</td><td>0.0</td><td>0.0</td></tr>
+                    <tr><td>White Sugar (1 tbsp)</td><td>49</td><td>0.0</td><td>12.6</td><td>0.0</td><td>0.0</td></tr>
+                    <tr><td>Brown Sugar (1 tbsp)</td><td>52</td><td>0.0</td><td>13.4</td><td>0.0</td><td>0.0</td></tr>
+                    <tr><td>Powdered Sugar (1 tbsp)</td><td>31</td><td>0.0</td><td>8.0</td><td>0.0</td><td>0.0</td></tr>
+                    <tr><td>Corn Syrup (1 tbsp)</td><td>57</td><td>0.0</td><td>15.6</td><td>0.0</td><td>0.0</td></tr>
+                    <tr><td>Molasses (1 tbsp)</td><td>58</td><td>0.0</td><td>15.0</td><td>0.0</td><td>0.0</td></tr>
+                    <tr><td>Jam (1 tbsp)</td><td>56</td><td>0.1</td><td>13.8</td><td>0.0</td><td>0.2</td></tr>
+                    <tr><td>Jelly (1 tbsp)</td><td>51</td><td>0.1</td><td>13.2</td><td>0.0</td><td>0.1</td></tr>
+                    <tr><td>Marshmallows (1 large)</td><td>23</td><td>0.1</td><td>5.8</td><td>0.0</td><td>0.0</td></tr>
+                    <tr><td>Gummy Bears (10 pieces)</td><td>87</td><td>1.0</td><td>21.0</td><td>0.0</td><td>0.0</td></tr>
+                    <tr><td>Hard Candy (1 piece)</td><td>23</td><td>0.0</td><td>5.7</td><td>0.0</td><td>0.0</td></tr>
+                    <tr><td>Chocolate Syrup (1 tbsp)</td><td>50</td><td>0.5</td><td>10.0</td><td>1.0</td><td>0.5</td></tr>
+                    <tr><td>Caramel Sauce (1 tbsp)</td><td>103</td><td>0.6</td><td>17.0</td><td>3.9</td><td>0.0</td></tr>
+                    <tr><td>Whipped Cream (2 tbsp)</td><td>52</td><td>0.3</td><td>0.8</td><td>5.5</td><td>0.0</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+                    
+                    <div class="nutri-section">
+                        <h2>Pre & Post Workout Nutrition</h2>
+                        <div class="workout-nutrition">
+                            <div class="nutri-timing">
+                                <h3>Pre-Workout (1-2 hours before)</h3>
+                                <p>Focus on easily digestible carbs and some protein:</p>
+                                <ul>
+                                    <li>Banana with peanut butter</li>
+                                    <li>Oatmeal with berries</li>
+                                    <li>Whole grain toast with eggs</li>
+                                </ul>
+                            </div>
+                            <div class="nutri-timing">
+                                <h3>Post-Workout (within 30-60 minutes)</h3>
+                                <p>Focus on protein and carbs to replenish glycogen and repair muscles:</p>
+                                <ul>
+                                    <li>Protein shake with banana</li>
+                                    <li>Grilled chicken with rice and vegetables</li>
+                                    <li>Greek yogurt with granola</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="nutri-section">
+                        <h2>Indian Ingredients Nutrition</h2>
+                        <div class="ingredient-search">
+                            <input type="text" id="ingredient-search" placeholder="Search Indian ingredients...">
+                            <button id="ingredient-search-btn"><i class="fas fa-search"></i></button>
+                        </div>
+                        <div class="ingredient-grid" id="ingredient-container">
+                            <!-- Indian ingredients will be loaded here via JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="nutri-section">
+                        <h2>Sample Meal Plan</h2>
+                        <div class="meal-plan">
+                            <div class="meal-card">
+                                <h3>Breakfast</h3>
+                                <p>2-3 Egg whites + 1 whole egg omelette with vegetables</p>
+                                <p>1 slice whole wheat bread</p>
+                                <p>1 cup green tea</p>
+                            </div>
+                            <div class="meal-card">
+                                <h3>Mid-Morning Snack</h3>
+                                <p>1 small bowl sprouts salad</p>
+                                <p>Handful of nuts</p>
+                            </div>
+                            <div class="meal-card">
+                                <h3>Lunch</h3>
+                                <p>1 cup brown rice</p>
+                                <p>1 cup dal (lentils)</p>
+                                <p>100g grilled chicken/fish/paneer</p>
+                                <p>1 cup mixed vegetables</p>
+                            </div>
+                            <div class="meal-card">
+                                <h3>Evening Snack</h3>
+                                <p>1 cup Greek yogurt with berries</p>
+                                <p>Handful of roasted chana</p>
+                            </div>
+                            <div class="meal-card">
+                                <h3>Dinner</h3>
+                                <p>2 rotis (whole wheat)</p>
+                                <p>1 cup vegetable curry</p>
+                                <p>100g grilled protein</p>
+                                <p>Salad</p>
+                            </div>
+                        </div>
+                        <p class="note">Note: Adjust portion sizes based on your calorie needs and macronutrient targets.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Workout Planner Section -->
+        <section id="workout-planner" class="section">
+            <div class="container">
+                <h1>Workout Planner</h1>
+                <p class="subtitle">Your personalized workout plan based on your goals</p>
+                
+                <div class="planner-controls">
+                    <button id="generate-plan" class="btn">Generate New Plan</button>
+                    <button id="save-plan" class="btn">Save This Plan</button>
+                </div>
+                
+                <div class="week-tabs" id="week-tabs">
+                    <!-- Week tabs will be generated here via JavaScript -->
+                </div>
+                
+                <div class="workout-plans" id="workout-plans-container">
+                    <!-- Workout plans will be generated here via JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Food Tracker Section -->
+        <section id="food-tracker" class="section">
+            <div class="container">
+                <h1>Food Tracker</h1>
+                <p class="subtitle">Track your daily food intake and nutrition</p>
+                
+                <div class="tracker-container">
+                    <div class="food-input">
+                        <h2>Add Food Items</h2>
+                        <div class="search-box">
+                            <input type="text" id="food-search" placeholder="Search food items...">
+                            <button id="food-search-btn"><i class="fas fa-search"></i></button>
+                        </div>
+                        <div class="search-results" id="food-search-results">
+                            <!-- Search results will appear here -->
+                        </div>
+                        
+                        <div class="selected-foods">
+                            <h3>Today's Food</h3>
+                            <div class="meal-type-selector">
+                                <button class="meal-btn active" data-meal="breakfast">Breakfast</button>
+                                <button class="meal-btn" data-meal="lunch">Lunch</button>
+                                <button class="meal-btn" data-meal="dinner">Dinner</button>
+                                <button class="meal-btn" data-meal="snacks">Snacks</button>
+                            </div>
+                            
+                            <div class="food-list" id="food-list">
+                                <!-- Selected foods will appear here -->
+                            </div>
+                            
+                            <div class="quantity-control">
+                                <label for="food-quantity">Quantity (grams):</label>
+                                <input type="number" id="food-quantity" min="1" value="100">
+                                <button id="add-food" class="btn">Add to List</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="nutrition-summary">
+                        <h2>Nutrition Summary</h2>
+                        <div class="summary-stats">
+                            <div class="summary-card">
+                                <h3>Total Calories</h3>
+                                <p id="total-calories">0 kcal</p>
+                            </div>
+                            <div class="summary-card">
+                                <h3>Protein</h3>
+                                <p id="total-protein">0 g</p>
+                            </div>
+                            <div class="summary-card">
+                                <h3>Carbs</h3>
+                                <p id="total-carbs">0 g</p>
+                            </div>
+                            <div class="summary-card">
+                                <h3>Fats</h3>
+                                <p id="total-fats">0 g</p>
+                            </div>
+                        </div>
+                        
+                        <div class="macronutrient-chart">
+                            <canvas id="macro-chart"></canvas>
+                        </div>
+                        
+                        <div class="detailed-nutrition">
+                            <h3>Detailed Nutrition</h3>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Food Item</th>
+                                        <th>Calories</th>
+                                        <th>Protein</th>
+                                        <th>Carbs</th>
+                                        <th>Fats</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="detailed-nutrition-table">
+                                    <!-- Food items will be added here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>FitTrack - Your Personalized Fitness & Nutrition Companion</p>
+            <h4 style="color: aliceblue;">Created by Tusha Rahul Bellamkonda</h4>
+            <p class="disclaimer">Note: This application provides general fitness and nutrition information. Consult with a healthcare professional before starting any new diet or exercise program.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
