@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rahul's Fat Loss Dashboard</title>
+  <title>Rahul's Gymmic Dashboard</title>
   
   <!-- Font and Icon CDNs -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -949,7 +949,7 @@
     <!-- Top Header -->
     <header>
       <div class="header-logo">
-        <h1>LooseIt Dashboard</h1>
+        <h1>Gymmic Dashboard</h1>
         <p>Rahul's Fat Loss Plan (95 kg ➜ 85 kg)</p>
       </div>
       <div class="header-controls">
@@ -1603,6 +1603,7 @@
           <button class="btn btn-secondary" id="export-csv-btn"><i data-lucide="file-text"></i> Export History (CSV)</button>
           <button class="btn btn-secondary" onclick="document.getElementById('import-file-input').click()"><i data-lucide="upload"></i> Import Data File</button>
           <input type="file" id="import-file-input" style="display:none;" accept=".json">
+          <button class="btn btn-secondary" id="demo-btn"><i data-lucide="sparkles"></i> Load Demo Data</button>
           <button class="btn btn-secondary btn-danger" id="reset-btn"><i data-lucide="refresh-cw"></i> Wipe Local Database</button>
         </div>
       </div>
@@ -1724,7 +1725,7 @@
     ];
 
     // Local Storage Database Key
-    const DB_KEY = "looseit_dashboard_db_data_v2";
+    const DB_KEY = "gymmic_dashboard_db_data_v2";
 
     // Main App State
     let appState = {
@@ -1843,7 +1844,7 @@
           activity: "sedentary",
           gender: "male"
         },
-        logs: seedMockData()
+        logs: {}
       };
       saveDatabase();
     }
@@ -3363,9 +3364,18 @@
         reader.readAsText(file);
       });
 
+      // Load Demo Data
+      document.getElementById("demo-btn").addEventListener("click", () => {
+        if (confirm("This will load 10 days of sample progress data so you can test the analytics graphs. This will overwrite any current logs. Do you want to proceed?")) {
+          appState.logs = seedMockData();
+          saveDatabase();
+          location.reload();
+        }
+      });
+
       // Reset data
       document.getElementById("reset-btn").addEventListener("click", () => {
-        if (confirm("WARNING: This will permanently erase all your historical weight and diet logs. Are you sure you want to proceed?")) {
+        if (confirm("WARNING: This will permanently erase all your historical weight and diet logs, restoring a blank workspace. Are you sure you want to proceed?")) {
           localStorage.removeItem(DB_KEY);
           location.reload();
         }
